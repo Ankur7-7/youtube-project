@@ -1,0 +1,15 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-youtubefrontend-dev-134501-authRole",
+      "UnauthRoleArn": "arn:aws:iam::229313639010:role/amplify-youtubefrontend-dev-134501-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::229313639010:role/amplify-youtubefrontend-dev-134501-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-youtubefrontend-dev-134501-deployment",
+      "UnauthRoleName": "amplify-youtubefrontend-dev-134501-unauthRole",
+      "StackName": "amplify-youtubefrontend-dev-134501",
+      "StackId": "arn:aws:cloudformation:ap-south-1:229313639010:stack/amplify-youtubefrontend-dev-134501/f20450d0-6b32-11ee-8d2b-0ab85aa40fce",
+      "AmplifyAppId": "d1n263dwto7ico"
+    }
+  }
+}

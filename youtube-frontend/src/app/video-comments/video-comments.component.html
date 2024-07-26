@@ -1,0 +1,81 @@
+
+        <div class = "video-card">
+            <div class="loader" *ngIf = "IsLoader">
+                <img [src]="loader" style="width: 100px; transform: translate(0, 50%); "/>
+            </div>
+
+            <div class="player-outer">
+                <div class="search-form">   
+                    <form>
+                        <mat-form-field class="search-box">
+                            <input matInput placeholder="Search here" name="search" [(ngModel)]= "search" >
+                        </mat-form-field>
+                        <button mat-raised-button class="submit-btn" color="primary" (click)="OnSubmit($event)">Submit</button>
+                    </form>
+                </div> 
+                <mat-list class="video-list" *ngIf = "IsList">                    
+                    <h2 matListTitle>Top Videos</h2>
+                    <cdk-virtual-scroll-viewport appendOnly itemSize="40" class="videos-viewport">
+                        <mat-list-item *cdkVirtualFor="let video of video_list" style="cursor: pointer" (click)="OnClick(video.id.videoId)" class="list-item">
+                            <img matListItemIcon [src]="video.snippet.thumbnails.medium.url" style="transform: scale(3)">
+                            <div matListItemTitle>{{video.snippet.title}}</div>
+                            <div matListItemLine></div>
+                        </mat-list-item>
+                    </cdk-virtual-scroll-viewport>
+                </mat-list>
+                 <mat-card class="player-card" *ngIf="IsPlayer">
+                     <!-- ngIf="IsPlayer" -->
+                    <mat-card-title style="color: #3f51b5">YouTube Player</mat-card-title>
+                    <mat-card-actions>
+                        <youtube-player class="youtube-player" [width]= "playerWidth" [height]= "playerHeight" [videoId]="video_id"></youtube-player>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <div class="comments-card" *ngIf="IsComments">
+                 <!-- *ngIf="IsComments" -->
+                <mat-card class="comments-summary">
+                    <mat-card-title style="color: #3f51b5">Public Opinion</mat-card-title>
+                    <mat-card-content>
+                        {{summary}}
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="comments-tag">
+                    <mat-card-title style="color: #3f51b5">Public Sentiment</mat-card-title>
+                    <mat-card-content class="tags-group">
+                        <div *ngFor="let tag of sentiments" class="tags">
+                            {{tag}}
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="user-comment">
+                    <mat-card-title style="color: #3f51b5">Public Comments Across YouTube</mat-card-title>
+                    <div>
+                        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" #group="matButtonToggleGroup" (change)="ChangeFilter(group.value)">
+                            <mat-button-toggle value="top" checked="true" >Top Comments</mat-button-toggle>
+                            <!-- <mat-button-toggle value="funny">Funny Comments</mat-button-toggle>
+                            <mat-button-toggle value="positive">Positive Comments</mat-button-toggle> -->
+                          </mat-button-toggle-group>
+                          
+                    </div>
+                    <cdk-virtual-scroll-viewport appendOnly itemSize="40" class="comments-viewport">
+                        <app-comments *cdkVirtualFor="let comment of comments|slice:
+                            (paginator.pageIndex*paginator.pageSize):
+                            ((paginator.pageIndex+1)*paginator.pageSize);
+                            let odd = odd;" [class.example-alternate]="odd" [comment]="comment">
+                        </app-comments>
+                    </cdk-virtual-scroll-viewport>
+                    <mat-paginator #paginator
+                        class="comments-paginator"
+                        (page)="handlePageEvent($event)"
+                        [length]= "length"
+                        [pageSize]= "pageSize"
+                        [disabled]="disabled"
+                        [showFirstLastButtons]="showFirstLastButtons"
+                        [hidePageSize]="hidePageSize"
+                        [pageIndex]="pageIndex"
+                        aria-label="Select page">
+                    </mat-paginator>
+                </mat-card>
+            </div>
+        </div>
+
